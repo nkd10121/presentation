@@ -4,11 +4,11 @@ using UnityEngine.UI;
 
 public class dispTime : MonoBehaviour
 {
-    void Update()
+    void Start()
     {
-        if(Timer.endSeconds != Timer.endOldSeconds)
-        {
-            Timer.endTimerText.text = Timer.endMinuts.ToString("00") + ":" + Timer.endSeconds.ToString("00");
-        }
+
+        gameObject.GetComponent<UnityEngine.UI.Text>().text = Timer.endMinuts.ToString("00") + ":" + Timer.endSeconds.ToString("00");
+
+        Debug.Log(Timer.endSeconds);
     }
 }
