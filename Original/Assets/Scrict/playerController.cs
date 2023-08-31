@@ -12,7 +12,7 @@ public class playerController : MonoBehaviour
     private float maxWalkSpeed = 3.0f;  //歩く速さの制限
     private bool isRightFlag = false;
     private bool isLeftFlag = false;
-    private bool isJumpFlag = false;
+    
     private bool isButtonDownFlag = false;    //ボタンが押されているか
 
     private float buttonDownTimeSpan = 1.0f;    //1秒間を計測する用
