@@ -53,14 +53,14 @@ public class playerController : MonoBehaviour
                 {
                     float rnd = Random.Range(1, 5);
                     float mag1 = jumpForce + 50 * rnd;
-                    audioSource.PlayOneShot(sound1);
                     this.rigid2D.AddForce(transform.up * mag1);
+                    audioSource.PlayOneShot(sound1);
                 }
                 else
                 {
                     float mag2 = jumpForce + 50 * whileButtonDownTime;
-                    audioSource.PlayOneShot(sound1);
                     this.rigid2D.AddForce(transform.up * mag2);
+                    audioSource.PlayOneShot(sound1);
                 }
             }
             isButtonDownFlag = false;
@@ -97,6 +97,13 @@ public class playerController : MonoBehaviour
                 isRightFlag = false;
             }
 
+            //左右両方押したとき移動しない
+            if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
+            {
+                rigid2D.velocity = Vector2.zero;
+            }
+
+            //移動しないときとジャンプボタンを押している間は移動しない
             if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D) || isButtonDownFlag)
             {
                 rigid2D.velocity = Vector2.zero;
@@ -108,12 +115,6 @@ public class playerController : MonoBehaviour
     void FixedUpdate()
     {
         Vector2 posi = this.transform.position;
-
-        //jump
-        if (isJumpFlag)
-        {
-
-        }
 
         //左右移動
         int key = 0;
