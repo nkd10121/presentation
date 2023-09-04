@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - startButton
+  - endButton
+  - sousaButton
+  - stage1Button
+  - stage2Button
   layers:
   - Default
   - TransparentFX
