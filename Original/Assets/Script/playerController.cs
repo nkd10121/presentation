@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class playerController : MonoBehaviour
 {
     Rigidbody2D rigid2D;
-    Animator animator;
+    Animator anim;
     private float jumpForce = 390.0f;   //ジャンプ力
     private float walkForce = 10.0f;    //歩く速さ
     private float maxWalkSpeed = 3.0f;  //歩く速さの制限
@@ -26,7 +26,7 @@ public class playerController : MonoBehaviour
     void Start()
     {
         this.rigid2D = GetComponent<Rigidbody2D>();
-        this.animator = GetComponent<Animator>();
+        this.anim = GetComponent<Animator>();
 
         
         audioSource = GetComponent<AudioSource>();
@@ -45,7 +45,9 @@ public class playerController : MonoBehaviour
         //ボタンを離した瞬間
         if (Input.GetMouseButtonUp(0) && this.rigid2D.velocity.y == 0)
         {
-            if(isButtonDownFlag)
+            anim.SetTrigger("jumpTrigger");
+
+            if (isButtonDownFlag)
             {          
                 //押した時間が4秒以上の時はランダムなジャンプ力に
                 //4秒以内の時は押した時間に応じてジャンプ力が変わる
@@ -74,6 +76,7 @@ public class playerController : MonoBehaviour
             currentTime = 0f;
         }
 
+        
         //左入力
         if(this.rigid2D.velocity.y == 0)
         {
@@ -103,17 +106,22 @@ public class playerController : MonoBehaviour
                 rigid2D.velocity = Vector2.zero;
             }
 
+            anim.SetBool("runBool", isLeftFlag || isRightFlag);
+
             //移動しないときとジャンプボタンを押している間は移動しない
             if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D) || isButtonDownFlag)
             {
                 rigid2D.velocity = Vector2.zero;
+                anim.SetBool("runBool", false);
             }
         }
         
+ 
     }
 
     void FixedUpdate()
     {
+
         Vector2 posi = this.transform.position;
 
         //左右移動
@@ -153,15 +161,15 @@ public class playerController : MonoBehaviour
             this.rigid2D.AddForce(transform.right * key * this.walkForce);
         }
 
-        //プレイヤの速度に応じてアニメーション速度を変える
-        if (this.rigid2D.velocity.y == 0)
-        {
-            this.animator.speed = speedx / 1.5f;
-        }
-        else
-        {
-            this.animator.speed = 1.0f;
-        }
+        ////プレイヤの速度に応じてアニメーション速度を変える
+        //if (this.rigid2D.velocity.y == 0)
+        //{
+        //    this.anim.speed = speedx / 1.5f;
+        //}
+        //else
+        //{
+        //    this.anim.speed = 1.0f;
+        //}
     }
 
     void OnTriggerEnter2D(Collider2D other)

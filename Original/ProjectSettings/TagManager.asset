@@ -9,6 +9,7 @@ TagManager:
   - sousaButton
   - stage1Button
   - stage2Button
+  - floor
   layers:
   - Default
   - TransparentFX
